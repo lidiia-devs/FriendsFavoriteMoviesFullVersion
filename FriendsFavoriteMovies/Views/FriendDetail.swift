@@ -8,11 +8,20 @@
 import SwiftUI
 
 struct FriendDetail: View {
+    @Bindable var friend: Friend
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Form {
+            TextField("Name", text: $friend.name)
+                .autocorrectionDisabled()
+        }
+        .navigationTitle("Friend")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 #Preview {
-    FriendDetail()
+    NavigationStack{
+        FriendDetail(friend: SampleData.shared.friend)
+    }
 }

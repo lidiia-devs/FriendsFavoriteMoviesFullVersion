@@ -11,10 +11,10 @@ struct ContentView: View {
     var body: some View {
         TabView {
             Tab("Friends", systemImage: "person.and.person") {
-                Text("Friends")
+                FriendList()
             }
             Tab("Movies", systemImage: "film.stack") {
-                Text("Movies")
+                MovieList()
             }
         }
     }
@@ -22,4 +22,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .modelContainer(SampleData.shared.modelContainer)
 }
