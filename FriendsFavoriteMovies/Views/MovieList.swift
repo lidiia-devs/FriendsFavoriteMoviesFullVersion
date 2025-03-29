@@ -10,8 +10,17 @@ import SwiftData
 
 struct MovieList: View {
     //References the Movie.title, not copying
-    @Query(sort: \Movie.title) private var movies: [Movie]
+    @Query private var movies: [Movie]
     @Environment(\.modelContext) private var context
+    
+    init(titleFilter: String = "") {
+        let predicate = #Predicate<Movie> {
+            movie in
+            titleFilter.isEmpty || movie.title.localizedStandardContains(titleFilter)
+        }
+        _movies = Query(filter: predicate, sort: \Movie.title)
+    }
+    
     @State private var newMovie: Movie?
 
     var body: some View {
@@ -61,4 +70,8 @@ struct MovieList: View {
 
 #Preview {
     MovieList().modelContainer(SampleData.shared.modelContainer)
+}
+
+#Preview("Filtered") {
+    MovieList(titleFilter: "tr").modelContainer(SampleData.shared.modelContainer)
 }
